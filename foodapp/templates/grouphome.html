@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Create or Join Group
+        </title>
+    </head>
+    <body>
+        <form action="/groups/?target=/grouphome/" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="operation" value="Create Group"/>
+            <input type="submit" name="Create Group" value="Create Group"/>
+        </form>
+        <form action="/groups/?target=/grouphome/" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="operation" value="Join Group"/>
+            <input type="submit" name="Join Group" value="Join Group"/>
+        </form>
+    </body>
+</html>
