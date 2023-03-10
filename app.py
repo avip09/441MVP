@@ -88,8 +88,7 @@ def preference_page():
             for username in sessions[session['session_code']]:
                 rec.addUserPreferences(sessions[session['session_code']][username].getCuisines(), 1, 4)
 
-            print(rec.getPreferences())
-            # TODO Display results
+            return render_template('results.html', results=rec.getPreferences())
         else:
             return render_template('waiting.html')
     
