@@ -74,22 +74,30 @@ def preference_page():
         option1 = request.form.get('option1')
         option2 = request.form.get('option2')
         option3 = request.form.get('option3')
+        minPrice = int(request.form.get('minPrice'))
+        maxPrice = int(request.form.get('maxPrice'))
+        priceWeight = float(request.form.get('priceCuisineWeight'))
 
-        sessions[session['session_code']][session['username']].setPref(option1, option2, option3)
+        sessions[session['session_code']][session['username']].setPref(option1, option2, option3, minPrice, maxPrice, priceWeight)
 
-        allSet = True
-        for username in sessions[session['session_code']].keys():
-            if not sessions[session['session_code']][username].isPrefSet():
-                allSet = False
-
-        if allSet:
-            rec = Recommender(len(sessions[session['session_code']]))
-            
-            for username in sessions[session['session_code']]:
-                rec.addUserPreferences(sessions[session['session_code']][username].getCuisines(), 1, 4)
-
-            return render_template('results.html', results=rec.getPreferences())
-        else:
-            return render_template('waiting.html')
+        return redirect(url_for('results_page'))
     
     return render_template('preference.html')
+
+@app.route('/results/')
+def results_page():
+    allSet = True
+    for username in sessions[session['session_code']].keys():
+        if not sessions[session['session_code']][username].isPrefSet():
+            allSet = False
+
+    if allSet:
+        rec = Recommender(len(sessions[session['session_code']]))
+        
+        for username in sessions[session['session_code']]:
+            user = sessions[session['session_code']][username]
+            rec.addUserPreferences(user.getCuisines(), user.getMinPrice(), user.getMaxPrice(), user.getPriceCuisineWeight())
+
+        return render_template('results.html', results=rec.getPreferences())
+    else:
+        return render_template('waiting.html')

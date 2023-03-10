@@ -6,10 +6,13 @@ class User:
     def getName(self):
         return self.name
 
-    def setPref(self, option1, option2, option3):
+    def setPref(self, option1, option2, option3, minPrice, maxPrice, priceWeight):
         self.option1 = option1
         self.option2 = option2
         self.option3 = option3
+        self.minPrice = minPrice
+        self.maxPrice = maxPrice
+        self.priceWeight = priceWeight
         self.prefSet = True
 
     def isPrefSet(self):
@@ -17,3 +20,12 @@ class User:
 
     def getCuisines(self):
         return [self.option1, self.option2, self.option3]
+
+    def getMinPrice(self):
+        return self.minPrice
+
+    def getMaxPrice(self):
+        return self.maxPrice
+
+    def getPriceCuisineWeight(self):
+        return [self.priceWeight, 1.0 - self.priceWeight]
