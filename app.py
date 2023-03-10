@@ -4,14 +4,15 @@ import uuid
 import hashlib
 import flask
 import arrow
-from flask import session, redirect, request
-import foodapp
+from flask import Flask, session, redirect, request, render_template
 
-@foodapp.app.route('/grouphome/')
+app = Flask(__name__)
+
+@app.route('/grouphome/')
 def change_password():
-    return flask.render_template("password.html")
+    return flask.render_template("grouphome.html")
 
-@foodapp.app.route('/groups/', methods=['POST'])
+@app.route('/groups/', methods=['POST'])
 def logout_account():
     if flask.request.form['operation'] == 'Create Group':
         return flask.render_template("creategroup.html")
