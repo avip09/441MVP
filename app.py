@@ -8,7 +8,7 @@ import random
 from flask import Flask, session, redirect, request, render_template, url_for
 from user import User
 
-#from algorithms.recommendationAlgorithm import recommendationAlgorithm
+from algorithms.recommendationAlgorithm import Recommender
 
 app = Flask(__name__)
 app.secret_key = "EECS441"
@@ -27,6 +27,7 @@ def index_page():
 
 @app.route('/group/')
 def group_page():
+    global sessions
     session_code = request.args.get('session_code', None)
     users = sessions[session_code]
 
@@ -34,13 +35,13 @@ def group_page():
     # TODO This should update client side
     names = []
     for user in users:
-        names.append(user.getName())
+        names.append(user)
 
     return render_template('group.html', session_code=session_code, names=names)
 
 @app.route('/grouphome/', methods = ['GET', 'POST'])
 def group_home():
-    global current_session_id
+    global current_session_id, sessions
     if request.method == 'POST':
         operation = request.form.get('operation')
 
@@ -52,12 +53,12 @@ def group_home():
             current_session_id = current_session_id + 1
 
             # Add user to new session
-            sessions[session_code] = [new_user]
+            sessions[session_code] = {session['username'] : new_user}
         else:
             session_code = request.form.get('session_join')
             
             # Add user to session
-            sessions[session_code].append(new_user)
+            sessions[session_code][session['username']] = new_user
 
         session["session_code"] = session_code
 
@@ -68,9 +69,34 @@ def group_home():
 
 @app.route('/preference/', methods = ['GET', 'POST'])
 def preference_page():
+    global sessions
     if request.method == 'POST':
         option1 = request.form.get('option1')
         option2 = request.form.get('option2')
         option3 = request.form.get('option3')
+
+        users = sessions[session['session_code']]
+        sessions[session['session_code']][session['username']].setPref(option1, option2, option3)
+
+        allSet = True
+        for username, user in sessions[session['session_code']].items():
+            # print(username)
+            # print(user)
+            # print(user.isPrefSet())
+            if not user.isPrefSet():
+                print(username)
+                allSet = False
+
+        if allSet:
+            rec = Recommender(len(users))
+            
+            for username in users:
+                rec.addUserPreferences(users[username].getCuisines(), 1, 4)
+
+            print(rec.getPreferences())
+            pass
+        else:
+            # Redirect to waiting page
+            pass
     
     return render_template('preference.html')

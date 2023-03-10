@@ -28,12 +28,26 @@ DATASET = [
 
 NUM_OF_OUTPUTS = len(DATASET)
 
-class Recommender():
+class Recommender:
 
     def __init__(self, users):
         self.users = users
         self.submitted_preferences_ = 0
         self.weighed_preferences_ = []
+
+    def getPreferences(self):
+
+        if self.submitted_preferences_ != self.users:
+            return -1
+
+        # Argsort the list of scores
+        sorted_list = [i for i in sorted(self.weighed_preferences_, key=lambda x:x[1])]
+        sorted_list.reverse()
+
+        # Return the top restaurant names and scores
+        output = sorted_list[:5]
+
+        return output
 
     def addUserPreferences(self, cuisine, lowPrice, highPrice, weights=[0.5, 0.5]):
         
@@ -48,21 +62,8 @@ class Recommender():
                         self.weighed_preferences_[i][1] += j[1]
                         break
         
-        return getPreferences()
-
-    def getPreferences(self):
-
-        if self.submitted_preferences_ == self.users:
-            return -1
-
-        # Argsort the list of scores
-        sorted_list = [i for i in sorted(self.weighed_preferences_, key=lambda x:x[1])]
-        sorted_list.reverse()
-
-        # Return the top restaurant names and scores
-        output = sorted_list[:5]
-
-        return output
+        self.submitted_preferences_ += 1
+        #return self.getPreferences()
 
     def getSubmittedPreferences(self):
         return self.submitted_preferences_
@@ -79,8 +80,8 @@ def recommendationAlgorithm(cuisine, lowPrice, highPrice, weights=[0.5, 0.5]):
         
         cuisineScore = 0
         if restaurant[1] in cuisine:
-            loc = 3 - cuisine.index(restaurant[1])
-        
+            cuisineScore = 3 - cuisine.index(restaurant[1])
+
         scores.append(weights[0] * priceScore + weights[1] * cuisineScore)
 
     # Argsort the list of scores
