@@ -19,7 +19,7 @@ current_session_id = 0
 @app.route('/login/', methods = ['POST'])
 def login_user():
     session['username'] = flask.request.form['username']
-    return redirect(url_for('group_home'))
+    return redirect(flask.url_for('group_home'))
 
 @app.route('/')
 def index_page():
