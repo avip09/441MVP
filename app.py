@@ -66,6 +66,11 @@ def group_home():
         return redirect(url_for('group_page', session_code=session_code))
     return render_template('grouphome.html')
 
-@app.route('/preference/')
+@app.route('/preference/', methods = ['GET', 'POST'])
 def preference_page():
+    if request.method == 'POST':
+        option1 = request.form.get('option1')
+        option2 = request.form.get('option2')
+        option3 = request.form.get('option3')
+    
     return render_template('preference.html')

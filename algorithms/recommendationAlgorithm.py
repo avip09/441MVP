@@ -48,13 +48,12 @@ class Recommender():
                         self.weighed_preferences_[i][1] += j[1]
                         break
         
-        submitted_preferences_ += 1
-        if submitted_preferences_ == users:
-            return getPreferences()
-        else:
-            return -1
+        return getPreferences()
 
     def getPreferences(self):
+
+        if self.submitted_preferences_ == self.users:
+            return -1
 
         # Argsort the list of scores
         sorted_list = [i for i in sorted(self.weighed_preferences_, key=lambda x:x[1])]
