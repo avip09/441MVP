@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
     <title>
         Group
     </title>
 
     <h1>
-        Group
+        Session Code: {{ session_code }}
     </h1>
 
+    <h1>
+        Group:
+    </h1>
 
-    <a href="/">Next</a>
+    {% for member in group %}
+      <h3>{{ member }}</h3>
+    {% endfor %}
+
+    <a href="/">Next</aref>
 </html>
