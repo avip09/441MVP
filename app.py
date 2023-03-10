@@ -21,10 +21,6 @@ def login_user():
     session['username'] = flask.request.form['username']
     return redirect(flask.url_for('group_home'))
 
-
-def index_page():
-    return render_template('index.html')
-
 @app.route('/')
 def index_page():
     return render_template('index.html')
