@@ -16,4 +16,4 @@ class User:
         return self.prefSet
 
     def getCuisines(self):
-        return (self.option1, self.option2, self.option3)
+        return [self.option1, self.option2, self.option3]

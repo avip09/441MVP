@@ -89,7 +89,7 @@ def recommendationAlgorithm(cuisine, lowPrice, highPrice, weights=[0.5, 0.5]):
     sorted_list.reverse()
 
     # Return the top restaurant names and scores
-    output = [(DATASET[sorted_list[i]][0], scores[sorted_list[i]]) for i in range(NUM_OF_OUTPUTS)]
+    output = [[DATASET[sorted_list[i]][0], scores[sorted_list[i]]] for i in range(NUM_OF_OUTPUTS)]
     
     return output
 

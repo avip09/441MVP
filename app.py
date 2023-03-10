@@ -75,28 +75,22 @@ def preference_page():
         option2 = request.form.get('option2')
         option3 = request.form.get('option3')
 
-        users = sessions[session['session_code']]
         sessions[session['session_code']][session['username']].setPref(option1, option2, option3)
 
         allSet = True
-        for username, user in sessions[session['session_code']].items():
-            # print(username)
-            # print(user)
-            # print(user.isPrefSet())
-            if not user.isPrefSet():
-                print(username)
+        for username in sessions[session['session_code']].keys():
+            if not sessions[session['session_code']][username].isPrefSet():
                 allSet = False
 
         if allSet:
-            rec = Recommender(len(users))
+            rec = Recommender(len(sessions[session['session_code']]))
             
-            for username in users:
-                rec.addUserPreferences(users[username].getCuisines(), 1, 4)
+            for username in sessions[session['session_code']]:
+                rec.addUserPreferences(sessions[session['session_code']][username].getCuisines(), 1, 4)
 
             print(rec.getPreferences())
-            pass
+            # TODO Display results
         else:
-            # Redirect to waiting page
-            pass
+            return render_template('waiting.html')
     
     return render_template('preference.html')
