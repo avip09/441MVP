@@ -16,7 +16,9 @@ current_session_id = 0
 
 @app.route('/login/', methods = ['POST'])
 def login_user():
-    pass
+    session['username'] = flask.request.form['username']
+    return redirect(flask.url_for('show_index'))
+
 
 def index_page():
     return render_template('index.html')
