@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class='h-100'>
     <head>
-        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
-    <body>
-        <form action="/preference/" method="post" enctype="multipart/form-data">
+    <body class='h-100 bg-dark align-items-center'>
+        <form action="/preference/" method="post" enctype="multipart/form-data" class="text-white row text-center justify-content-center">
             Option 1
             <select name="option1">
+                <option value="none" selected disabled hidden></option>
                 <option value="Japanese">Japanese</option>
                 <option value="Korean">Korean</option>
                 <option value="Mexican">Mexican</option>
@@ -18,6 +19,7 @@
             </select><br>
             Option 2
             <select name="option2">
+                <option value="none" selected disabled hidden></option>
                 <option value="Japanese">Japanese</option>
                 <option value="Korean">Korean</option>
                 <option value="Mexican">Mexican</option>
@@ -29,6 +31,7 @@
             </select><br>
             Option 3
             <select name="option3">
+                <option value="none" selected disabled hidden></option>
                 <option value="Japanese">Japanese</option>
                 <option value="Korean">Korean</option>
                 <option value="Mexican">Mexican</option>
@@ -40,12 +43,14 @@
             </select><br>
             Price Range
             <select name="minPrice">
+                <option value="none" selected disabled hidden></option>
                 <option value=1>$</option>
                 <option value=2>$$</option>
                 <option value=3>$$$</option>
                 <option value=4>$$$$</option>
             </select>
             <select name="maxPrice">
+                <option value="none" selected disabled hidden></option>
                 <option value=1>$</option>
                 <option value=2>$$</option>
                 <option value=3>$$$</option>
@@ -55,5 +60,6 @@
             <br>
             <input type="submit" name="submit" value="submit"/>
         </form>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     </body>
 </html>
