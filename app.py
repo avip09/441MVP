@@ -84,20 +84,25 @@ def preference_page():
     
     return render_template('preference.html')
 
-@app.route('/results/')
+@app.route('/results/', methods = ['GET', 'POST'])
 def results_page():
-    allSet = True
-    for username in sessions[session['session_code']].keys():
-        if not sessions[session['session_code']][username].isPrefSet():
-            allSet = False
+    if request.method == 'GET':
+        allSet = True
+        for username in sessions[session['session_code']].keys():
+            if not sessions[session['session_code']][username].isPrefSet():
+                allSet = False
 
-    if allSet:
-        rec = Recommender(len(sessions[session['session_code']]))
-        
-        for username in sessions[session['session_code']]:
-            user = sessions[session['session_code']][username]
-            rec.addUserPreferences(user.getCuisines(), user.getMinPrice(), user.getMaxPrice(), user.getPriceCuisineWeight())
+        if allSet:
+            rec = Recommender(len(sessions[session['session_code']]))
+            
+            for username in sessions[session['session_code']]:
+                user = sessions[session['session_code']][username]
+                rec.addUserPreferences(user.getCuisines(), user.getMinPrice(), user.getMaxPrice(), user.getPriceCuisineWeight())
 
-        return render_template('results.html', results=rec.getPreferences())
+            return render_template('results.html', results=rec.getPreferences())
+        else:
+            return render_template('waiting.html')
     else:
-        return render_template('waiting.html')
+        with open("feedback.txt", 'a') as f:
+            f.write(request.form.get('commentfield') + '\n')
+        return redirect(url_for('results_page'))

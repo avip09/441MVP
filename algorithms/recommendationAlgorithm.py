@@ -56,11 +56,15 @@ class Recommender:
         if self.weighed_preferences_ == []:
             self.weighed_preferences_ = prefs
         else:
-            for i in range(len(self.weighed_preferences_)):
-                for j in prefs:
+            for j in prefs:
+                check = False
+                for i in range(len(self.weighed_preferences_)):
                     if self.weighed_preferences_[i][0] == j[0]:
                         self.weighed_preferences_[i][1] += j[1]
+                        check = True
                         break
+                if check == False:
+                    self.weighed_preferences_.append(i)
         
         self.submitted_preferences_ += 1
         #return self.getPreferences()
@@ -88,8 +92,8 @@ def recommendationAlgorithm(cuisine, lowPrice, highPrice, weights=[0.5, 0.5]):
     sorted_list = [i[0] for i in sorted(enumerate(scores), key=lambda x:x[1])]
     sorted_list.reverse()
 
-    # Return the top restaurant names and scores
-    output = [[DATASET[sorted_list[i]][0], scores[sorted_list[i]]] for i in range(NUM_OF_OUTPUTS)]
+    # Return the top restaurant names and scores - [Name, Score, Cuisine, Price]
+    output = [[DATASET[sorted_list[i]][0], scores[sorted_list[i]], DATASET[sorted_list[i]][1], DATASET[sorted_list[i]][2]] for i in range(NUM_OF_OUTPUTS)]
     
     return output
 
