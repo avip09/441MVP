@@ -77,8 +77,10 @@ def preference_page():
         minPrice = int(request.form.get('minPrice'))
         maxPrice = int(request.form.get('maxPrice'))
         priceWeight = float(request.form.get('priceCuisineWeight'))
+        north = bool(request.form.get('north'))
+        central = bool(request.form.get('central'))
 
-        sessions[session['session_code']][session['username']].setPref(option1, option2, option3, minPrice, maxPrice, priceWeight)
+        sessions[session['session_code']][session['username']].setPref(option1, option2, option3, minPrice, maxPrice, north, central, priceWeight)
 
         return redirect(url_for('results_page'))
     
@@ -97,7 +99,7 @@ def results_page():
             
             for username in sessions[session['session_code']]:
                 user = sessions[session['session_code']][username]
-                rec.addUserPreferences(user.getCuisines(), user.getMinPrice(), user.getMaxPrice(), user.getPriceCuisineWeight())
+                rec.addUserPreferences(user.getCuisines(), user.getMinPrice(), user.getMaxPrice(), user.getIsCentral(), user.getIsNorth(), user.getPriceCuisineWeight())
 
             return render_template('results.html', results=rec.getPreferences())
         else:

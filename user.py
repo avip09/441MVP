@@ -6,7 +6,7 @@ class User:
     def getName(self):
         return self.name
 
-    def setPref(self, option1, option2, option3, minPrice, maxPrice, priceWeight):
+    def setPref(self, option1, option2, option3, minPrice, maxPrice, isNorth, isCentral, priceWeight):
         self.option1 = option1
         self.option2 = option2
         self.option3 = option3
@@ -14,6 +14,8 @@ class User:
         self.maxPrice = maxPrice
         self.priceWeight = priceWeight
         self.prefSet = True
+        self.isNorth = isNorth
+        self.isCentral = isCentral
 
     def isPrefSet(self):
         return self.prefSet
@@ -29,3 +31,9 @@ class User:
 
     def getPriceCuisineWeight(self):
         return [self.priceWeight, 1.0 - self.priceWeight]
+
+    def getIsNorth(self):
+        return self.isNorth
+    
+    def getIsCentral(self):
+        return self.isCentral

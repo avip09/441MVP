@@ -1,29 +1,35 @@
-# Hard coded dataset, to be replaced by Google Maps API
 DATASET = [
-    ('Tomokun Noodle Bar', 'Japanese', 2),
-    ('Totoro', 'Japanese', 2),
-    ('Slurping Turtle', 'Japanese', 2),
-    ('Tomokun Korean BBQ', 'Korean', 2),
-    ('The Seoul', 'Korean', 2),
-    ('Hola Seoul', 'Korean', 1),
-    ('Chipotle', 'Mexican', 1),
-    ('Isalita', 'Mexican', 2),
-    ('Condado Tacos', 'Mexican', 2),
-    ('The Origin Cottage Inn Pizza', 'Italian', 2),
-    ('Mani Osteria and Bar', 'Italian', 2),
-    ('The Earle', 'Italian', 3),
-    ('Asian Legend', 'Chinese', 2),
-    ('Panda Express', 'Chinese', 1),
-    ('One Bowl Asian Cuisine', 'Chinese', 2),
-    ('Namaste Flavors Arbor', 'Indian', 2),
-    ('Taste of India', 'Indian', 2),
-    ('Shalimar', 'Indian', 2),
-    ('New York Pizza Depot', 'Pizza', 2),
-    ('Pizza House', 'Pizza', 2),
-    ("Joe's Pizza", 'Pizza', 1),
-    ("Knight's Steakhouse", 'Steak', 3),
-    ("Ruth's Chris Steak House", 'Steak', 4),
-    ("The Chop House", 'Steak', 4)
+    ('Tomokun Noodle Bar', 'Japanese', 2, 'Central'),
+    ('Totoro', 'Japanese', 2, 'Central'),
+    ('Slurping Turtle', 'Japanese', 2, 'Central'),
+    ('Tomokun Korean BBQ', 'Korean', 2, 'Central'),
+    ('The Seoul', 'Korean', 2, 'Central'),
+    ('Hola Seoul', 'Korean', 1, 'Central'),
+    ('Chipotle', 'Mexican', 1, 'Central'),
+    ('Isalita', 'Mexican', 2, 'Central'),
+    ('Condado Tacos', 'Mexican', 2, 'Central'),
+    ('The Origin Cottage Inn Pizza', 'Italian', 2, 'Central'),
+    ('Mani Osteria and Bar', 'Italian', 2, 'Central'),
+    ('The Earle', 'Italian', 3, 'Central'),
+    ('Asian Legend', 'Chinese', 2, 'Central'),
+    ('Panda Express', 'Chinese', 1, 'North'),
+    ('One Bowl Asian Cuisine', 'Chinese', 2, 'Central'),
+    ('Namaste Flavors Arbor', 'Indian', 2, 'Central'),
+    ('Taste of India', 'Indian', 2, 'Central'),
+    ('Shalimar', 'Indian', 2, 'Central'),
+    ('New York Pizza Depot', 'Pizza', 2, 'Central'),
+    ('Pizza House', 'Pizza', 2, 'Central'),
+    ("Joe's Pizza", 'Pizza', 1, 'Central'),
+    ("Knight's Steakhouse", 'Steak', 3, 'Central'),
+    ("Ruth's Chris Steak House", 'Steak', 4, 'Central'),
+    ("Hibachi-san", 'Japanese', 2, 'North'),
+    ("Marco's Pizza", 'Pizza', 1, 'North'),
+    ("Nagomi", 'Korean', 2, 'North'),
+    ("Seoul Street", 'Korean', 2, 'North'),
+    ("Evergreen", 'Chinese', 2, 'North'),
+    ("El Limon", 'Mexican', 1, 'North'),
+    ("Carson's American Bistro", 'Steak', 2, 'North'),
+    ("Jet's Pizza", 'Pizza', 1, 'North')
 ]
 
 NUM_OF_OUTPUTS = len(DATASET)
@@ -49,9 +55,9 @@ class Recommender:
 
         return output
 
-    def addUserPreferences(self, cuisine, lowPrice, highPrice, weights=[0.5, 0.5]):
+    def addUserPreferences(self, cuisine, lowPrice, highPrice, inCentral, inNorth, weights=[0.5, 0.5]):
         
-        prefs = recommendationAlgorithm(cuisine, lowPrice, highPrice, weights)
+        prefs = recommendationAlgorithm(cuisine, lowPrice, highPrice, inCentral, inNorth, weights)
 
         if self.weighed_preferences_ == []:
             self.weighed_preferences_ = prefs
@@ -73,10 +79,15 @@ class Recommender:
         return self.submitted_preferences_
 
 
-def recommendationAlgorithm(cuisine, lowPrice, highPrice, weights=[0.5, 0.5]):
+def recommendationAlgorithm(cuisine, lowPrice, highPrice, inCentral, inNorth, weights=[0.5, 0.5]):
     scores = []
 
     for restaurant in DATASET:
+        if (restaurant[3] == 'North' and inNorth == False) or (restaurant[3] == 'Central' and inCentral == False):
+            locationScore = -3
+        else:
+            locationScore = 3
+        
         priceScore = 0
         
         if not (restaurant[2] >= lowPrice and restaurant[2] <= highPrice):
@@ -86,14 +97,14 @@ def recommendationAlgorithm(cuisine, lowPrice, highPrice, weights=[0.5, 0.5]):
         if restaurant[1] in cuisine:
             cuisineScore = 3 - cuisine.index(restaurant[1])
 
-        scores.append(weights[0] * priceScore + weights[1] * cuisineScore)
+        scores.append(weights[0] * priceScore + weights[1] * cuisineScore + locationScore)
 
     # Argsort the list of scores
     sorted_list = [i[0] for i in sorted(enumerate(scores), key=lambda x:x[1])]
     sorted_list.reverse()
 
     # Return the top restaurant names and scores - [Name, Score, Cuisine, Price]
-    output = [[DATASET[sorted_list[i]][0], scores[sorted_list[i]], DATASET[sorted_list[i]][1], DATASET[sorted_list[i]][2]] for i in range(NUM_OF_OUTPUTS)]
+    output = [[DATASET[sorted_list[i]][0], scores[sorted_list[i]], DATASET[sorted_list[i]][1], DATASET[sorted_list[i]][2], DATASET[sorted_list[i]][3]] for i in range(NUM_OF_OUTPUTS)]
     
     return output
 

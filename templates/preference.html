@@ -6,11 +6,13 @@
     <body class='h-100 bg-dark align-items-center'>
     <div class="h-100 d-flex align-items-center justify-content-center">
         <form action="/preference/" method="post" enctype="multipart/form-data" class="text-white">
-            <h4 class='text-decoration-underline text-warning'>
-                Cuisine
-            </h4>
-            First Choice
-            <select name="option1">
+            <p style="display:inline"class='h1 text-warning'>Cuisine</p>
+            <button class="btn btn-sm" type="button" onclick="alert('First, select your top 3 cuisines from the ones listed.')">
+                <img src="/static/i.png" alt="Help">
+            </button>
+            <br>
+            <p class='h4' style="display:inline">First Choice&emsp;&emsp;&nbsp;</p>
+            <select class='h4 text-black' name="option1">
                 <option value="none" selected disabled hidden></option>
                 <option value="Japanese">Japanese</option>
                 <option value="Korean">Korean</option>
@@ -22,8 +24,8 @@
                 <option value="Steak">Steak</option>
             </select>
             <br>
-            Second Choice
-            <select name="option2">
+            <p class='h4' style="display:inline">Second Choice&emsp;</p>
+            <select class='h4 text-black' name="option2">
                 <option value="none" selected disabled hidden></option>
                 <option value="Japanese">Japanese</option>
                 <option value="Korean">Korean</option>
@@ -34,8 +36,8 @@
                 <option value="Pizza">Pizza</option>
                 <option value="Steak">Steak</option>
             </select><br>
-            Third Choice
-            <select name="option3">
+            <p class='h4' style="display:inline">Third Choice&emsp;&emsp;</p>
+            <select class='h4 text-black' name="option3">
                 <option value="none" selected disabled hidden></option>
                 <option value="Japanese">Japanese</option>
                 <option value="Korean">Korean</option>
@@ -46,31 +48,51 @@
                 <option value="Pizza">Pizza</option>
                 <option value="Steak">Steak</option>
             </select><br>
-            <h4 class='text-decoration-underline text-warning'>
-                Price Range
-            </h4>
-            Minimum Price
-            <select name="minPrice">
-                <option value="none" selected disabled hidden></option>
-                <option value=1>$</option>
-                <option value=2>$$</option>
-                <option value=3>$$$</option>
-                <option value=4>$$$$</option>
-            </select><br>
-            Maximum Price
-            <select name="maxPrice">
-                <option value="none" selected disabled hidden></option>
-                <option value=1>$</option>
-                <option value=2>$$</option>
-                <option value=3>$$$</option>
-                <option value=4>$$$$</option>
-            </select><br>
-            <h4 class='text-decoration-underline text-warning'>
-                Preference Importance
-            </h4>
-            Price<input type="range" min="0" max="1" value="0.5" step="0.01" class="slider" name="priceCuisineWeight">Cuisine
+            <h4 style="display:inline" class='h1 text-warning'>Price Range</h4>
+            <button class="btn btn-sm" type="button" onclick="alert('Select the minimum and maximum class of money ranges you are willing to pay at restaurants from $ being the cheapest to $$$$ being the most expensive.')">
+                <img src="/static/i.png" alt="Help">
+            </button>
             <br>
-            <input type="submit" name="submit" value="submit"/>
+            <p class='h4' style="display:inline">Minimum Price&emsp;&emsp;</p>
+            <select class='h4 text-black' name="minPrice">
+                <option value="none" selected disabled hidden></option>
+                <option value=1>$</option>
+                <option value=2>$$</option>
+                <option value=3>$$$</option>
+                <option value=4>$$$$</option>
+            </select><br>
+            <p class='h4' style="display:inline">Maximum Price&emsp;&emsp;</p>
+            <select class='h4 text-black' name="maxPrice">
+                <option value="none" selected disabled hidden></option>
+                <option value=1>$</option>
+                <option value=2>$$</option>
+                <option value=3>$$$</option>
+                <option value=4>$$$$</option>
+            </select><br>
+            <h4 style="display:inline" class='h1 text-warning'>Location Preference</h4>
+            <button class="btn btn-sm" type="button" onclick="alert('Select whether you prefer restaurants on central campus, north campus, or both.')">
+                <img src="/static/i.png" alt="Help">
+            </button>
+            <br>
+            <p class='h4' style="display:inline">North Campus&emsp;&emsp;</p>
+            
+            <input type="checkbox" name="north">
+            
+            <br>
+            <p class='h4' style="display:inline">Central Campus&emsp;&ensp;</p>
+            
+            <input type="checkbox" name="central">
+            
+            <br>
+            
+            <h4 style="display:inline" class='h1 text-warning'>Preference Importance</h4>
+            <button class="btn btn-sm" type="button" onclick="alert('Finally, for the preference importance, use the slider to indicate how much more important is price than cuisine to you or vice-versa.')">
+                <img src="/static/i.png" alt="Help">
+            </button>
+            <br>
+            <p class='h4' style="display:inline">Price&emsp;</p><input type="range" min="0" max="1" value="0.5" step="0.01" name="priceCuisineWeight"><p class='h4' style="display:inline">&emsp;Cuisine</p>
+            <br><br>
+            <input class="w-100 btn btn-warning btn-lg" type="submit" name="submit" value="Submit"/>
         </form>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     </div>
